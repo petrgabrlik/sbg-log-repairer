@@ -18,6 +18,8 @@ $GPZDA,114604.66,23,02,2017,,*67
 $GPHDT,189.80,T*0D
 $GPGST,114604.66,0.000,0.000,0.000,86.42,0.03,0.03,0.03*6A
 $PRDID,-000.16,-000.47,185280$GPGGA,114606.90,4913.707794,N,01634.297321,E,4,15,0.0,302.449,M,44.831,M,,*6B
+                             ^
+                     line feed missing
 
 Repaired NMEA log:
 $GPGGA,114604.66,4913.707791,N,01634.297317,E,4,15,0.0,302.440,M,44.831,M,,*69
@@ -60,6 +62,6 @@ def repair(log):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        print("Finished: {:} messages repaired.".format(repair(sys.argv[1])))
+        print("Finished: {:} messages repaired.".format( repair(sys.argv[1]) ))
     else:
         print("Argument missing: pass log file as the argument")
