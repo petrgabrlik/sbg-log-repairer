@@ -32,14 +32,20 @@ def find(s, ch):
     '''
     return [i for i, ltr in enumerate(s) if ltr == ch]
 
-log = 'ttyS1_2016_05_05_21_34_05_073.txt'
-print(find(log, '.')[-1])
-source = open(log)
-dest = open(log[:find(log, '.')[-1]]+'_repaired'+log[find(log, '.')[-1]:], 'a')
+def repair():
+    '''
+    Main function
+    '''
+    log = 'ttyS1_2016_05_05_21_34_05_073.txt'
+    source = open(log)
+    dest = open(log[:find(log, '.')[-1]] + '_repaired' + log[find(log, '.')[-1]:], 'a')
 
-for line in source:
-    dollar_pos = find(line, '$')
-    if len(dollar_pos) == 2:
-        print(line[:dollar_pos[1]] + '\n', line[dollar_pos[1]:], sep='', end='', file=dest)
-    else:
-        print(line, end='', file=dest)
+    for line in source:
+        dollar_pos = find(line, '$')
+        if len(dollar_pos) == 2:
+            print(line[:dollar_pos[1]] + '\n', line[dollar_pos[1]:], sep='', end='', file=dest)
+        else:
+            print(line, end='', file=dest)
+
+if __name__ == '__main__':
+    repair()
