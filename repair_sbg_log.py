@@ -5,8 +5,11 @@ SBG Ellipse-E supports 6 types of NMEA messages:
 $GPGGA, $GPRMC, $GPZDA, $GPHDT, $GPGST, $PRDID
 
 $PRDID message contains two issues. There is no checksum and there is no line
-feed character. This script adds line feed to this message and saves the log
-to a new file.
+feed character.
+
+This script adds line feed to this message and saves the log to a new file.
+This file can be usead as a module by calling repair() function with one
+argument (log file).
 
 Original NMEA log:
 $GPGGA,114604.66,4913.707791,N,01634.297317,E,4,15,0.0,302.440,M,44.831,M,,*69
@@ -26,17 +29,18 @@ $PRDID,-000.16,-000.47,185280
 $GPGGA,114606.90,4913.707794,N,01634.297321,E,4,15,0.0,302.449,M,44.831,M,,*6B
 '''
 
+import sys
+
 def find(s, ch):
     '''
     This function finds all occurrences of the substring and returns their indexes.
     '''
     return [i for i, ltr in enumerate(s) if ltr == ch]
 
-def repair():
+def repair(log):
     '''
-    Main function
+    Repair SBG NMEA log
     '''
-    log = 'ttyS1_2016_05_05_21_34_05_073.txt'
     source = open(log)
     dest = open(log[:find(log, '.')[-1]] + '_repaired' + log[find(log, '.')[-1]:], 'a')
 
@@ -48,4 +52,7 @@ def repair():
             print(line, end='', file=dest)
 
 if __name__ == '__main__':
-    repair()
+    if len(sys.argv) > 1:
+        repair(sys.argv[1])
+    else:
+        print("Argument missing: pass log file as the argument")
