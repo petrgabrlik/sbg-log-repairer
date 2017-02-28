@@ -43,6 +43,9 @@ def find(s, ch):
 def repair(log):
     '''
     Repair SBG NMEA log
+
+    This function adds a newline character at the end of the PRDID
+    message.
     '''
     source = open(log)
     dest = open(log[:find(log, '.')[-1]] + '_repaired'
@@ -53,7 +56,7 @@ def repair(log):
         dollar_pos = find(line, '$')
         if len(dollar_pos) == 2:
             print(line[:dollar_pos[1]] + '\n', line[dollar_pos[1]:], sep='',
-                end='', file=dest)
+                end='', file=dest) # add newline character
             repair_counter += 1
         else:
             print(line, end='', file=dest)
